@@ -12,7 +12,12 @@ import numpy as np
 
 
 def cython_ext():
-    return cythonize("**/*.pyx")
+    #from distutils.sysconfig import get_python_inc
+    #get_python_inc() #this gives the include dir
+    libs = cythonize("**/*.pyx")
+    for lib in libs:
+        lib.language="h5cc"
+    return libs
 
 setuptools.setup(
     name='chx_xpcs',
@@ -20,6 +25,6 @@ setuptools.setup(
     packages=setuptools.find_packages(exclude=['doc']),
     include_dirs=[np.get_include()],
     # scripts for building external modules
-    ext_modules=cython_ext(),
+    #ext_modules=cython_ext(),
     )
 

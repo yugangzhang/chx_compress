@@ -98,3 +98,5 @@ generated/
 /skbeam/**/*.c
 
 **/_as_gen/*.rst
+
+*bin
