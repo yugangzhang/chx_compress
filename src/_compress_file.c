@@ -287,7 +287,7 @@ int raw_compress_file(char * filename, char *dataset_root,
 				                 count_out, NULL);
     
     printf("Found %d data sets.\n", h5ed.cnt);
-    for (dset_number = h5ed.min; dset_number < h5ed.cnt+1; dset_number++){
+    for (dset_number = h5ed.min; dset_number < h5ed.cnt; dset_number++){
         sprintf(dataset_name, "%s%06d", dataset_prefix, dset_number);
         printf("Grabbing dataset %s\n", dataset_name);
         dataset = H5Dopen2(file, dataset_name, H5P_DEFAULT);
