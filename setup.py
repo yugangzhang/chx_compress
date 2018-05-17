@@ -10,20 +10,15 @@ from Cython.Build import cythonize
 import numpy as np
 
 
-
-def cython_ext():
-    #from distutils.sysconfig import get_python_inc
-    #get_python_inc() #this gives the include dir
-    libs = cythonize("**/*.pyx")
-    for lib in libs:
-        lib.language="h5cc"
-    return libs
+with open('requirements.txt') as f:
+    requirements = f.read().split()
 
 setuptools.setup(
     name='chx_xpcs',
     author='Yugang Zhang and Julien Lhermitte',
     packages=setuptools.find_packages(exclude=['doc']),
     include_dirs=[np.get_include()],
+    install_requires=requirements
     # scripts for building external modules
     #ext_modules=cython_ext(),
     )
