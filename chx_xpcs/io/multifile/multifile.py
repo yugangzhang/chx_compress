@@ -315,3 +315,20 @@ class MultifileBNL:
     def rdrawframe(self, n):
         # read header then image
         return self._read_raw(n)
+
+
+class MultifileBNLCustom(MultifileBNL):
+    def __init__(self, filename, beg=0, end=None, **kwargs):
+        super().__init__(filename, **kwargs)
+        self.beg = beg
+        if end is None:
+            end = self.Nframes-1
+        self.end = end
+
+    def rdframe(self, n):
+        if n > self.end:
+            raise IndexError("Index out of range")
+        return super().rdframe(n - self.beg)
+
+    def rdrawframe(self, n):
+        return super().rdrawframe(n - self.beg)
