@@ -219,8 +219,8 @@ class MultifileBNL:
 
         # these are only necessary for writing
         self.md = self._read_main_header()
-        self._rows = int(self.md['nrows'])
-        self._cols = int(self.md['ncols'])
+        self._cols = int(self.md['nrows'])
+        self._rows = int(self.md['ncols'])
 
         # some initialization stuff
         self.nbytes = self.md['bytes']
