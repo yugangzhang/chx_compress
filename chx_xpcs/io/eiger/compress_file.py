@@ -6,9 +6,9 @@ import struct
 
 EIGER_KEYS = {
     # old version
-    'wavelength' : "entry/instrument/monochromator/wavelength",
+    #'wavelength' : "entry/instrument/monochromator/wavelength",
     # new version
-    #'wavelength' : "entry/instrument/beam/incident_wavelength",
+    'wavelength' : "entry/instrument/beam/incident_wavelength",
     'beam_center_x' : "entry/instrument/detector/beam_center_x",
     'beam_center_y' : "entry/instrument/detector/beam_center_x",
     'count_time' : "entry/instrument/detector/count_time",
