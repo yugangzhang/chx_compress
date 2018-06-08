@@ -195,7 +195,7 @@ class MultifileBNL:
 
     '''
     HEADER_SIZE = 1024
-    def __init__(self, filename, mode='rb', nbytes=4):
+    def __init__(self, filename, mode='rb'):
         '''
             Prepare a file for reading or writing.
             mode : either 'rb' or 'wb'
