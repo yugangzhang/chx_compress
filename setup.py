@@ -4,7 +4,7 @@ from distutils.core import setup, Extension
 import versioneer
 import os
 import sys
-from Cython.Build import cythonize
+#from Cython.Build import cythonize
 
 # necessary deps (won't build if this isn't here)
 import numpy as np
