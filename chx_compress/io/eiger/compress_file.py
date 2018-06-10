@@ -4,11 +4,11 @@ import numpy as np
 
 import struct
 
-EIGER_KEYS = {
-    # old version
-    #'wavelength' : "entry/instrument/monochromator/wavelength",
-    # new version
-    'wavelength' : "entry/instrument/beam/incident_wavelength",
+EIGER_KEYS_DEFAULT = {
+    # old version (less than v1.3.0)
+    'wavelength_pre1.3' : "entry/instrument/monochromator/wavelength",
+    # new version (greater than v1.3.0)
+    'wavelength_post1.3' : "entry/instrument/beam/incident_wavelength",
     'beam_center_x' : "entry/instrument/detector/beam_center_x",
     'beam_center_y' : "entry/instrument/detector/beam_center_x",
     'count_time' : "entry/instrument/detector/count_time",
@@ -62,7 +62,18 @@ def get_header(filename, dims):
 
 #@numba.jit()
 def compress_file(filename, dset_min=1, dset_max=50, dset_root="/entry/data",
-                  dset_pref="data_", outfile="out.bin"):
+                  dset_pref="data_", outfile="out.bin", version="v1.3.0"):
+
+    # this is copied from default in order to allow to mutate the dict for
+    # different version EIGER's
+    EIGER_KEYS = EIGER_KEYS_DEFAULT.copy()
+
+    # resolve the version number
+    if version >= "v1.3.0":
+        EIGER_KEYS['wavelength'] = EIGER_KEYS['wavelength_post1.3']
+    else:
+        EIGER_KEYS['wavelength'] = EIGER_KEYS['wavelength_pre1.3']
+
     f = h5py.File(filename)
     fout = open(outfile, "wb")
 
