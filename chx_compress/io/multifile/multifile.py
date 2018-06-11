@@ -240,6 +240,9 @@ class MultifileBNL:
         # frame number currently on
         self.index()
 
+    def __len__(self):
+        return self.Nframes
+
     def index(self):
         ''' Index the file by reading all frame_indexes.
             For faster later access.
