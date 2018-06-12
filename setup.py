@@ -14,7 +14,7 @@ with open('requirements.txt') as f:
     requirements = f.read().split()
 
 setuptools.setup(
-    name='chx_xpcs',
+    name='chx_compress',
     author='Yugang Zhang and Julien Lhermitte',
     packages=setuptools.find_packages(exclude=['doc']),
     include_dirs=[np.get_include()],

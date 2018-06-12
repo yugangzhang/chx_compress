@@ -33,7 +33,7 @@ import numpy as np
 """
 
 # TODO : split into RO and RW classes
-class Multifile:
+class MultifileAPS:
     '''
     Re-write multifile from scratch.
 
@@ -195,11 +195,16 @@ class MultifileBNL:
 
     '''
     HEADER_SIZE = 1024
-    def __init__(self, filename, mode='rb'):
+    def __init__(self, filename, mode='rb', version=2):
         '''
             Prepare a file for reading or writing.
             mode : either 'rb' or 'wb'
+
+            version : int, optional
+                version 1 is old bnl format
+                version 2 is the new format
         '''
+        self._version = version
         if mode == 'wb':
             raise ValueError("Write mode 'wb' not supported yet")
 
@@ -219,8 +224,8 @@ class MultifileBNL:
 
         # these are only necessary for writing
         self.md = self._read_main_header()
-        self._cols = int(self.md['nrows'])
-        self._rows = int(self.md['ncols'])
+        self._rows = int(self.md['nrows'])
+        self._cols = int(self.md['ncols'])
 
         # some initialization stuff
         self.nbytes = self.md['bytes']
@@ -234,6 +239,9 @@ class MultifileBNL:
 
         # frame number currently on
         self.index()
+
+    def __len__(self):
+        return self.Nframes
 
     def index(self):
         ''' Index the file by reading all frame_indexes.
@@ -310,7 +318,12 @@ class MultifileBNL:
         pos, vals = self._read_raw(n)
         img = np.zeros((self._rows*self._cols,))
         img[pos] = vals
-        return img.reshape((self._rows, self._cols))
+        # trying to retain backwards compatibility of the old file
+        if self._version > 1:
+            img = img.reshape((self._rows, self._cols))
+        else:
+            img = img.reshape((self._cols, self._rows))
+        return img
 
     def rdrawframe(self, n):
         # read header then image
