@@ -149,7 +149,12 @@ def get_valid_keys(filename, version="v1.3.0"):
     Nkeys = len(dset_keys)
     nums = np.array([int(dset_key[5:]) for dset_key in dset_keys])
 
-    if not np.allclose(nums, np.arange(1, Nkeys+1)):
+    if version >= "v1.3.0":
+        key_range = np.arange(1, Nkeys+1)
+    else:
+        key_range = np.arange(0, Nkeys)
+
+    if not np.allclose(nums, key_range):
         msg = "Error, keys don't increase in ascending"
         msg += " order from 1 to {}".format(Nkeys)
         raise ValueError(msg)
