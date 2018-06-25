@@ -33,7 +33,7 @@ def get_header_binary(filename, dims, version="v1.3.0"):
         # this will be very unlikely
         EIGER_KEYS['wavelength'] = EIGER_KEYS['wavelength_pre1.3']
 
-    print("dims is  {}".format(dims))
+    # print("dims is  {}".format(dims))
     # dims : image dims
     # make the header from the EIGER file
     f = h5py.File(filename)
