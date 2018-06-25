@@ -1,3 +1,7 @@
+'''
+Multifile by Yugang Zhang (yuzhang@bnl.gov)
+
+'''
 import numpy as np
 import struct
 import os
