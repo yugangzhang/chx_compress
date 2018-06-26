@@ -331,17 +331,24 @@ class MultifileBNL:
 
 
 class MultifileBNLCustom(MultifileBNL):
-    def __init__(self, filename, beg=0, end=None, **kwargs):
+    def __init__(self, filename, beg=0, end=None, reverse=True, **kwargs):
         super().__init__(filename, **kwargs)
         self.beg = beg
         if end is None:
             end = self.Nframes-1
         self.end = end
+        self.reverse = reverse
 
     def rdframe(self, n):
         if n > self.end:
             raise IndexError("Index out of range")
-        return super().rdframe(n - self.beg)
+        if self.reverse:
+            return super().rdframe(n - self.beg)[::-1]
+        else:
+            return super().rdframe(n - self.beg) 
 
     def rdrawframe(self, n):
-        return super().rdrawframe(n - self.beg)
+        if self.reverse:
+            return super().rdrawframe(n - self.beg)[::-1]
+        else:
+            return super().rdrawframe(n - self.beg)
